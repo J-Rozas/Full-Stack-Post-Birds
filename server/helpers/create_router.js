@@ -42,6 +42,19 @@ const createRouter = function (collection) {
       });
   });
 
+  router.post('/', (req, res) => {
+    const newBird = req.body;
+
+    collection
+      .insertOne(newBird)
+      .then(result => res.json(result.ops[0]))
+      .catch(err => {
+        console.error(err);
+        res.status(500);
+        res.json({status: 500, error: err});
+      });
+  });
+
   return router;
 };
 
